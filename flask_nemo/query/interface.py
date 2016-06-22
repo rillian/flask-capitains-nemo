@@ -45,15 +45,20 @@ class SimpleQuery(QueryPrototype):
         """
         self.__nemo__ = nemo
         for annotation in self.__annotations__:
-            text = self.__getText__(annotation.target.urn)
-            if annotation.target.urn.reference.end \
-                or len(annotation.target.urn.reference.list) < len(text.citation):
-                annotation.target.expanded = frozenset(self.__getinnerreffs__(
-                    text=text,
-                    urn=annotation.target.urn
-                ))
-            else:
-                annotation.target.expanded = frozenset([str(annotation.target.urn)])
+            try:
+                text = self.__getText__(annotation.target.urn)
+                annotation.target.available = True
+                if annotation.target.urn.reference.end \
+                        or len(annotation.target.urn.reference.list) < len(text.citation):
+                    annotation.target.expanded = frozenset(self.__getinnerreffs__(
+                        text=text,
+                        urn=annotation.target.urn
+                    ))
+                else:
+                    annotation.target.expanded = frozenset([str(annotation.target.urn)])
+            except:
+                annotation.target.available = False
+                continue
 
     def __getText__(self, urn):
         """ Return a metadata text object
@@ -111,8 +116,8 @@ class SimpleQuery(QueryPrototype):
             annotations.extend([
                 annotation
                 for annotation in self.annotations
-                if str(_urn) == str(annotation.target.urn) or  # Exact Match
-                bool(urns_in_range.intersection(annotation.target.expanded))  # Deeper than
+                if annotation.target.available and (str(_urn) == str(annotation.target.urn) or  # Exact Match
+                bool(urns_in_range.intersection(annotation.target.expanded)))  # Deeper than
             ])
 
         annotations = list(set(annotations))

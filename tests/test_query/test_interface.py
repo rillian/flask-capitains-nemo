@@ -20,6 +20,7 @@ class TestSimpleQuery(TestCase):
         self.one = ("urn:cts:latinLit:phi1294.phi002.perseus-lat2:6.1", "interface/treebanks/treebank1.xml", "dc:treebank")
         self.two = ("urn:cts:latinLit:phi1294.phi002.perseus-lat2:1.5", "interface/treebanks/treebank2.xml", "dc:treebank")
         self.three = ("urn:cts:latinLit:phi1294.phi002.perseus-lat2:6.1", "interface/images/N0060308_TIFF_145_145.tif", "dc:image")
+        self.unavail = ("urn:cts:greekLit:my0000.my00.perseus-lat2:1.1", "interface/treebanks/treebank1.xml","dc:treebank")
         self.four = AnnotationResource(
             "interface/researchobject/researchobject.json",
             type_uri="dc:researchobject",
@@ -44,6 +45,12 @@ class TestSimpleQuery(TestCase):
             target=self.three[0],
             resolver=self.resolver
         )
+        self.unavail_anno =  AnnotationResource(
+            self.unavail[1],
+            type_uri=self.unavail[2],
+            target=self.unavail[0],
+            resolver=self.resolver
+        )
         self.app = Flask("app")
         self.nautilus = NautilusRetriever(folders=["tests/test_data/interface/latinLit"])
         self.nemo = Nemo(app=self.app, retriever=self.nautilus, base_url="/")
@@ -52,7 +59,8 @@ class TestSimpleQuery(TestCase):
                 self.one,
                 self.two,
                 self.three,
-                self.four
+                self.four,
+                self.unavail,
             ],  # List of annotations
             self.resolver
         )
@@ -60,19 +68,28 @@ class TestSimpleQuery(TestCase):
 
     def test_process(self):
         """ Check that all annotations are taken care of"""
-        self.assertEqual(len(self.query.annotations), 4, "There should be 4 annotations")
+        self.assertEqual(len(self.query.annotations), 5, "There should be 4 annotations")
 
     def test_get_all(self):
         """ Check that get all returns 3 annotations """
         hits, annotations = self.query.getAnnotations(None)
-        self.assertEqual(hits, 4, "There should be 4 annotations")
+        self.assertEqual(hits, 5, "There should be 5 annotations")
         self.assertCountEqual(dict_list(annotations), dict_list(
             [
                 self.one_anno,
                 self.two_anno,
                 self.three_anno,
+                self.unavail_anno,
                 self.four
-            ]), "There should be all three annotation")
+            ]), "There should be all annotation")
+
+    def test_available_flag(self):
+        hits, annotations = self.query.getAnnotations(None)
+        self.assertEqual(annotations[0].target.available, True, "Annotation target should be available")
+        self.assertEqual(annotations[1].target.available, True, "Annotation target should be available")
+        self.assertEqual(annotations[2].target.available, True, "Annotation target should be available")
+        self.assertEqual(annotations[3].target.available, False, "Annotation target should not be available")
+        self.assertEqual(annotations[4].target.available, True, "Annotation target should be available")
 
     def test_get_exact_match(self):
         """ Ensure exact match works """
