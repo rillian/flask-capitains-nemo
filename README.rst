@@ -14,6 +14,15 @@
 .. image:: https://badge.fury.io/py/flask_nemo.svg
     :target: https://badge.fury.io/py/flask_nemo
 
+
+.. image:: https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg
+    :alt: License: MPL 2.0
+    :target: https://opensource.org/licenses/MPL-2.0
+
+
+.. image:: https://github.com/Capitains/tutorial-nemo/raw/master/header.png
+    :alt: Nemo Banner
+
 Capitains Nemo is an User Interface built around the need to make CTS a easy to use, human readable standard for texts. 
 Capitains Nemo counts multiple language implementation, including this one in Python for Flask. Presentend as a classic Flask
 Extension, `flask.ext.nemo` intends to be a simple, customizable interface between your enduser and your CTS5 API.
