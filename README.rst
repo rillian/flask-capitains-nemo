@@ -20,7 +20,7 @@
     :target: https://opensource.org/licenses/MPL-2.0
 
 
-.. image:: https://github.com/Capitains/tutorial-nemo/raw/master/header.png
+.. image:: https://raw.githubusercontent.com/Capitains/tutorial-nemo/master/header.png
     :alt: Nemo Banner
     :target: http://capitains.org
 
