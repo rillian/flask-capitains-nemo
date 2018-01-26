@@ -28,7 +28,7 @@ Capitains Nemo is an User Interface built around the need to make CapiTainS a ea
 Capitains Nemo counts multiple language implementation, including this one in Python for Flask. Built as a classic Flask
 Extension, `flask.ext.nemo` intends to be a simple, customizable interface between your end-user and your Text APIs.
 
-If you are new to the Capitains world, feel free to get some reading time on the `generic website<http://capitains.org>`_
+If you are new to the Capitains world, feel free to get some reading time on the `generic website <http://capitains.org>`_
 
 The Flask's extension Nemo can be customized from its stylesheets to its functions. Adding routes or removing them is
 as easy as adding a XSL Stylesheet to transform the very own result of a CTS GetPassage results to your own expected output.
@@ -36,7 +36,7 @@ as easy as adding a XSL Stylesheet to transform the very own result of a CTS Get
 Tutorial and example
 ####################
 
-You can find a tutorial on `Github Capitains/tutorial-nemo<https://github.com/capitains/tutorial-nemo>`_ repository and
+You can find a tutorial on `Github Capitains/tutorial-nemo <https://github.com/capitains/tutorial-nemo>`_ repository and
 an example server (based on this tutorial) on `Heroku <https://tutorial-nemo.herokuapp.com/>`_
 
 Install
