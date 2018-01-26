@@ -127,7 +127,7 @@ class Nemo(object):
                  cache=None, resolver=None,
                  plugins=None,
                  template_folder=None, static_folder=None, static_url_path=None,
-                 urls=None, transform=None, chunker=None, prevnext=None,
+                 urls=None, transform=None, chunker=None,
                  css=None, js=None, templates=None, statics=None,
                  prevent_plugin_clearing_assets=False,
                  original_breadcrumb=True, default_lang="eng"):
