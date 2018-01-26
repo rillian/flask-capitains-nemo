@@ -24,8 +24,8 @@
     :alt: Nemo Banner
     :target: http://capitains.org
 
-Capitains Nemo is an User Interface built around the need to make CapiTainS a easy to use, human readable standard for texts.
-Capitains Nemo counts multiple language implementation, including this one in Python for Flask. Built as a classic Flask
+Capitains Nemo is an User Interface built around the need to make CapiTainS an easy-to-use, human-readable standard for texts.
+Capitains Nemo counts multiple language implementations, including this one in Python for Flask. Built as a classic Flask
 Extension, `flask.ext.nemo` intends to be a simple, customizable interface between your end-user and your Text APIs.
 
 If you are new to the Capitains world, feel free to get some reading time on the `generic website <http://capitains.org>`_
