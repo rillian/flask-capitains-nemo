@@ -945,6 +945,55 @@ class Nemo(object):
         return self.chunker["default"](text, reffs)
 
 
+class NemoFormulae(Nemo):
+
+    ROUTES = [
+        ("/", "r_index", ["GET"]),
+        ("/collections", "r_collections", ["GET"]),
+        ("/collections/<objectId>", "r_collection", ["GET"]),
+        ("/text/<objectId>/references", "r_references", ["GET"]),
+        ("/text/<objectId>/passage/<subreference>", "r_passage", ["GET"]),
+        ("/text/<objectId>/translation/<translationId>/passage/<subreference>", "r_translation", ["GET"]),
+        ("/text/<objectId>/passage", "r_first_passage", ["GET"])
+    ]
+    SEMANTIC_ROUTES = [
+        "r_collection", "r_references", "r_passage", "r_translation"
+    ]
+
+    CACHED = [
+        # Routes
+        "r_index", "r_collection", "r_collections", "r_references", "r_passage", "r_first_passage", "r_assets", "r_translation",
+        # Controllers
+        "get_inventory", "get_collection", "get_reffs", "get_passage", "get_siblings",
+        # Translater
+        "semantic", "make_coins", "expose_ancestors_or_children", "make_members", "transform",
+        # Business logic
+        # "view_maker", "route", #"render",
+    ]
+
+    def r_translation(self, objectId, subreference, translationId, lang=None):
+        """ Retrieve the text of the passage
+
+        :param objectId: Collection identifier
+        :type objectId: str
+        :param lang: Lang in which to express main data
+        :type lang: str
+        :param subreference: Reference identifier
+        :type subreference: str
+        :return: Template, collections metadata and Markup object representing the text
+        :rtype: {str: Any}
+        """
+        passage_data = self.r_passage(objectId, subreference, lang=lang)
+        translation_text = self.get_passage(objectId=translationId, subreference=subreference)
+        translation_passage = self.transform(translation_text,
+                                             translation_text.export(Mimetypes.PYTHON.ETREE),
+                                             translationId)
+        # trans_prev, trans_next = self.get_siblings(transId, subreference, trans_text)
+        passage_data['translation_passage'] = Markup(translation_passage)
+        passage_data['translationId'] = translationId
+        return passage_data
+
+
 def _plugin_endpoint_rename(fn_name, instance):
     """ Rename endpoint function name to avoid conflict when namespacing is set to true
 

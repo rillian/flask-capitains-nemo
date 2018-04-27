@@ -1,4 +1,4 @@
-from flask_nemo import Nemo
+from flask_nemo import NemoFormulae as Nemo
 from flask_nemo.chunker import level_grouper
 from flask import Flask
 from MyCapytain.resolvers.cts.api import HttpCtsResolver
